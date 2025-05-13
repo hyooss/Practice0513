@@ -2,7 +2,12 @@
 #include <stdlib.h>
 #define MAX_SIZE 5
 
-void linear_stack_push(stackType*stack) {
+typedef struct {
+    int data[MAX_SIZE];
+    int top;
+} stackType;
+
+void linear_stack_push(stackType*stack,int item) {
 
     // push 연산
     //스택의 top을 증가시킨 후 top의 위치에 item 설정
@@ -18,19 +23,23 @@ void linear_stack_push(stackType*stack) {
 
 }
 
-void linear_stack_pop(stackType*stack) {
-    int popItem;
+int linear_stack_pop(stackType*stack) {
 
-    //pop
+    //pop은 스택에서 가장 위에 있는 데이터를 가져옴
+    //top의 값을 감소
+
+    //스택이 비어있을 경우
+    if (stack->top==-1) {
+        printf("Stack is Empty\n");
+        return -1;
+    }
+
+    int popItem;
     popItem = stack->data[stack->top];
     stack->top--;
-    printf("Pop Item: %d\n,popItem");
+    return popItem;
 }
 
-typedef stack{
-    int data[MAX_SIZE];
-    int top;
-}stackType;
 
 void linear_stack_display(stackType*stack) {
     //배열에 있는 데이터를 top의 위치까지 탐색하여 출력
@@ -46,11 +55,12 @@ void linear_stack_display(stackType*stack) {
 }
 
 void linear_stack_menu(stackType*stack) {
+
+    int menu,item,popItem;
+
     while (1) {
         printf("Linear Stakc: 1. Push , 2. Pop , 3. Display 4.Exit\n");
         printf("Input Menu ? ");
-        int menu;
-        int item;
 
         scanf("%d",&menu);
 
@@ -60,7 +70,10 @@ void linear_stack_menu(stackType*stack) {
             linear_stack_push(stack,item);
         }
         else if (menu == 2) {
-            linear_stack_pop(stack);
+            popItem=linear_stack_pop(stack);
+            if (popItem>=0){
+                printf("Pop Item: %d\n",popItem);
+            }
         }
         else if (menu == 3) {
             linear_stack_display(stack);
